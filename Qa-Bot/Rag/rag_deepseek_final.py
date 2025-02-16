@@ -11,7 +11,7 @@ from langchain.vectorstores import Chroma
 import requests
 import tempfile
 import os
-
+import json
 
 
 
@@ -24,7 +24,7 @@ retriever = None  # Will be initialized after PDF processing
 @app.route("/load_pdf", methods=["POST"])
 def load_pdf():
     global retriever
-    
+    print("loading pdf")
     pdf_url = request.json.get("pdf_url")
     if not pdf_url:
         return jsonify({"error": "PDF URL is required"}), 400
@@ -54,7 +54,10 @@ def load_pdf():
     
     # # Create/reset the collection
     collection_name = "foundations_of_llms"
-    # client.delete_collection(name=collection_name)  # Ensure fresh collection
+    try:
+        client.delete_collection(name=collection_name)  # Ensure fresh collection
+    except Exception as e:
+        print(f"Error deleting collection: {e}")
     # collection = client.create_collection(name=collection_name)
     collection = client.create_collection(name="foundations_of_llms")
     for idx, chunk in enumerate(chunks):
@@ -70,6 +73,7 @@ def load_pdf():
     
     # Clean up temp file
     os.remove(temp_pdf_path)
+    print("PDF loaded and processed successfully")
     
     return jsonify({"message": "PDF loaded and processed successfully"})
 
@@ -81,6 +85,7 @@ def ask_question():
         return jsonify({"error": "No PDF loaded. Please load a PDF first."}), 400
     
     question = request.json.get("question")
+    print(question)
     if not question:
         return jsonify({"error": "Question is required"}), 400
     
@@ -92,7 +97,7 @@ def ask_question():
         model="deepseek-r1",
         messages=[{'role': 'user', 'content': formatted_prompt}]
     )
-    
+    print("respondinng")
     response_content = response['message']['content']
     final_answer = re.sub(r'<think>.*?</think>', '', response_content, flags=re.DOTALL).strip()
     
@@ -103,6 +108,16 @@ def home():
     return jsonify({"message": "Welcome home! Your API is running."})
 
 
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
+
+
+
+
+    
+    
+
+            
 
