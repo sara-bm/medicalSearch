@@ -57,10 +57,102 @@ medicalSearch/
    ```sh
    git clone https://github.com/sara-bm/medicalSearch.git
    cd medicalSearch
-```
+  ```
 2. Create a virtual environment:
+   ```sh
+   python -m venv venv
+   source venv/bin/activate   # macOS/Linux
+   # .\venv\Scripts\activate  # Windows
+   ```
+3. Install dependencies:
+   ```sh
+   pip install -r requirements.txt
+   ```
+4. Configure environment variables in a .env file:
+   ```sh
+   ELASTICSEARCH_URL=http://localhost:9200
+   ELASTICSEARCH_USER=your_user
+   ELASTICSEARCH_PASSWORD=your_password
+   CHROMEDB_PATH=./chromedb
+   OPENAI_API_KEY=your_api_key
+   MODEL_PATH=./models
+   ```
+## ▶️ Usage
+
+1. Scraping Papers
+   Run the scraper to fetch abstracts & PDFs:
    ```bash
-python -m venv venv
-source venv/bin/activate   # macOS/Linux
-# .\venv\Scripts\activate  # Windows
+   python Scraping/run_scraper.py
+   ```
+
+2. Summarization
+   Get a summary + paper URLs for a query:
+   ```bash
+   python Rag_Summary/summarize.py --query "latest research on mRNA vaccines"
+   ```
+
+3. Q&A :
+   Answer detailed questions from PDFs:
+   ```bash
+   python Qa-Bot/qa.py --query "What side effects were reported in mRNA vaccine studies?"
+   ```
+
+4. Run Streamlit  App :
+   ```bash
+      cd Neuro-Med-app
+      uvicorn app:app --reload
+   ```
+
+## 🔧 Customization
+
+* Embeddings: Swap between BioBERT, SciBERT, or Sentence-BERT.
+* LLMs: Replace or fine-tune LLaMA / DeepSeek.
+* Retrieval: Adjust similarity thresholds & top-k results.
+* PDF Splitting: Tune chunk size for document embeddings.
+
+## 📦 Dependencies
+Key libraries:
+
+* transformers, sentence-transformers, bioBERT
+* elasticsearch, chromadb
+* uvicorn, fastapi (for API)
+* pdfplumber / PyPDF2 (PDF parsing)
+* scikit-learn or faiss (similarity search)
+
+# Install all via:
+```sh
+pip install -r requirements.txt
+```
+## ✅ Example Workflow
+
+1. Scrape new papers from arXiv.
+2. Index abstracts in Elasticsearch.
+3. Embed full-text PDFs into Chromadb.
+4. User asks: “What are the risks of long-term AI use in radiology?”
+5. Summarizer returns summary + URLs.
+6. QA module retrieves PDFs & answers in detail.
+
+## 📌 Limitations
+
+* Depends on scraped datasets (limited coverage).
+* Risk of hallucinations from LLM.
+* PDF parsing may introduce noise.
+* Latency when processing large PDFs.
+
+## 🤝 Contributing
+
+-  Fork the project.
+- Create your feature branch (git checkout -b feature/new-feature).
+- Commit your changes (git commit -m 'Add new feature').
+- Push to the branch (git push origin feature/new-feature).
+- Open a Pull Request.
+
+## 📜 License
+- MIT License
+## ✨ Citation
+If you use this project in research, please cite:
+```sh
+textNeuroMed / medicalSearch (2025).
+"RAG pipeline for medical literature summarization & Q&A."
+GitHub Repository: https://github.com/sara-bm/medicalSearch
 ```
