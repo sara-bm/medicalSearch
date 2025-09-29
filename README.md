@@ -56,9 +56,10 @@ medicalSearch/
    ```bash
    git clone https://github.com/sara-bm/medicalSearch.git
    cd medicalSearch
-
+```
 2. Create a virtual environment:
    ```bash
 python -m venv venv
 source venv/bin/activate   # macOS/Linux
 # .\venv\Scripts\activate  # Windows
+```
