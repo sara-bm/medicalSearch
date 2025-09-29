@@ -57,7 +57,7 @@ medicalSearch/
    ```sh
    git clone https://github.com/sara-bm/medicalSearch.git
    cd medicalSearch
-  ```
+   ```
 2. Create a virtual environment:
    ```sh
    python -m venv venv
