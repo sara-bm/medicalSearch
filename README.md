@@ -27,8 +27,6 @@ medicalSearch/
 ├── .gitignore
 └── README.md # Project documentation
 
-markdown
-Copier le code
 
 ---
 
