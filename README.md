@@ -14,6 +14,7 @@ It integrates **web scraping, embeddings, vector databases, and LLMs** to delive
 ---
 
 ## 📂 Repository Structure
+```bash
 medicalSearch/
 │
 ├── Scraping/ # Web scraping modules for arXiv / papers
@@ -25,7 +26,7 @@ medicalSearch/
 ├── .env # Environment variables
 ├── .gitignore
 └── README.md # Project documentation
-
+```
 ---
 
 ## 🚀 Features
@@ -53,7 +54,7 @@ medicalSearch/
 ### Setup
 
 1. Clone the repository:
-   ```bash
+   ```sh
    git clone https://github.com/sara-bm/medicalSearch.git
    cd medicalSearch
 ```
